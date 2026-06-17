@@ -19,9 +19,13 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+
+// connect to database
+// TODO: have errros be logged to an error file
 const CONNECTION_STRING = process.env.DB; 
-mongoose.connect(CONNECTION_STRING, function(err, db) {
-  if(err) console.log(err);
+mongoose.connect(CONNECTION_STRING).catch(err => console.log(error));
+mongoose.connection.on('error', err => {
+  console.log(err);
 });
 
 var Schema = mongoose.Schema;
