@@ -23,14 +23,14 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // connect to database
 // TODO: have errros be logged to an error file
 const CONNECTION_STRING = process.env.DB; 
-mongoose.connect(CONNECTION_STRING).catch(err => console.log(error));
+mongoose.connect(CONNECTION_STRING).catch(err => console.log(err));
 mongoose.connection.on('error', err => {
   console.log(err);
 });
 
-var Schema = mongoose.Schema;
+const Schema = mongoose.Schema;
 
-var issueSchema = new Schema({
+const issueSchema = new Schema({
   issue_title: {type: String, required: true},
   issue_text: {type: String, required: true},
   created_by: {type: String, required: true},
