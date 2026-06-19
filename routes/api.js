@@ -54,7 +54,6 @@ module.exports = function (app) {
     .post(function (req, res){
       let project = req.params.project;
       let data = req.body;
-      console.log("hello world");
          
       let postData = JSON.parse(JSON.stringify(data));
       if(!postData.issue_title || !postData.issue_text || !postData.created_by){
@@ -82,7 +81,6 @@ module.exports = function (app) {
           updated_on: data.updated_on,
           open: data.open        
         };
-        console.log(jsonData);
         
         res.json(jsonData);
       });

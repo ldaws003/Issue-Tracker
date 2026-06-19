@@ -14,6 +14,7 @@ const runner = require('./test-runner');
 var app = express();
 
 app.use('/public', express.static(process.cwd() + '/public'));
+app.use('/scripts', express.static(process.cwd() + '/scripts'));
 
 app.use(cors({ origin: '*' })); //For FCC testing purposes only
 
@@ -27,7 +28,8 @@ app.use(helmet({
   dnsPrefetchControl: false,
   contentSecurityPolicy: {
     directives: {
-      defaultSrc: ["'self'"]
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://code.jquery.com"]
     }    
   }
 }));
