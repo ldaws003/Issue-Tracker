@@ -15,15 +15,10 @@ const queryString = require('query-string');
 const ObjectId = require('mongodb').ObjectID;
 const express     = require('express');
 const bodyParser  = require('body-parser');
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-
 
 // connect to database
-// TODO: have errros be logged to an error file
-const CONNECTION_STRING = process.env.DB; 
-mongoose.connect(CONNECTION_STRING).catch(err => console.log(err));
+const CONNECTION_STRING = process.env.DB;
+mongoose.connect(CONNECTION_STRING, { dbName: "IssueTracker" }).catch(err => console.log(err));
 mongoose.connection.on('error', err => {
   console.log(err);
 });
@@ -41,15 +36,15 @@ const issueSchema = new Schema({
   open: Boolean
 });
 
-var Issue = mongoose.model('Issue', issueSchema);
+let Issue = mongoose.model('Issue', issueSchema);
 
 module.exports = function (app) {
 
   app.route('/api/issues/:project')
   
     .get(function (req, res){    
-      var project = req.params.project;  
-      var query = req.query;
+      let project = req.params.project;  
+      let query = req.query;
       
       Issue.find(query, function(err, data){
         res.send(data);
@@ -57,10 +52,11 @@ module.exports = function (app) {
     })
     
     .post(function (req, res){
-      var project = req.params.project;
-      var data = req.body;
+      let project = req.params.project;
+      let data = req.body;
+      console.log("hello world");
          
-      var postData = JSON.parse(JSON.stringify(data));
+      let postData = JSON.parse(JSON.stringify(data));
       if(!postData.issue_title || !postData.issue_text || !postData.created_by){
         res.json({error: 'Required fields are missing'});
         return;
@@ -71,11 +67,11 @@ module.exports = function (app) {
       if(!postData.status_text){
         postData.status_text ='';
       }
-      var postData = Object.assign(postData, {created_on: new Date().toUTCString(), updated_on: new Date().toUTCString(), open: true});
-      var newIssue = new Issue(postData);
+      postData = Object.assign(postData, {created_on: new Date().toUTCString(), updated_on: new Date().toUTCString(), open: true});
+      let newIssue = new Issue(postData);
       newIssue.save((error, data) => {
         if(error) console.log(error);
-        var jsonData = {
+        let jsonData = {
           _id: data._id,
           issue_title: data.issue_title,
           issue_text: data.issue_text,
@@ -86,6 +82,7 @@ module.exports = function (app) {
           updated_on: data.updated_on,
           open: data.open        
         };
+        console.log(jsonData);
         
         res.json(jsonData);
       });
@@ -93,9 +90,9 @@ module.exports = function (app) {
     })
     
     .put(function (req, res){
-      var project = req.params.project;
-      var data = req.body;
-      var updateData = JSON.parse(JSON.stringify(data));
+      let project = req.params.project;
+      let data = req.body;
+      let updateData = JSON.parse(JSON.stringify(data));
     
       
       if(Object.keys(data).length == 1){
@@ -123,8 +120,8 @@ module.exports = function (app) {
     })
     
     .delete(function (req, res){
-      var project = req.params.project;
-      var idDelete = req.body._id;
+      let project = req.params.project;
+      let idDelete = req.body._id;
     
     
       //checks to see if a parameter was passed or only spaces was given

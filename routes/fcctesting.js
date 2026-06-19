@@ -33,7 +33,7 @@ var runner = require('../test-runner');
 
 module.exports = function (app) {
 
-  app.route('/_api/server.js')
+  app.route('/_api/index.js')
     .get(function(req, res, next) {
       console.log('requested');
       fs.readFile(__dirname + '/server.js', function(err, data) {

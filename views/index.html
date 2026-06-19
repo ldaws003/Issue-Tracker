@@ -67,10 +67,6 @@
     </div>
     <h2><a href="/apitest/">EXAMPLE: Go to Apitest project issues</a></h2>
     <hr style="margin: 50px; margin-top: 50px">
-    <!-- Your web-app is https, so your scripts need to be too -->
-    <script src="https://code.jquery.com/jquery-2.2.1.min.js"
-            integrity="sha256-gvQgAFzTH6trSrAWoH1iPo9Xc96QxSZ3feW6kem+O00="
-            crossorigin="anonymous"></script>
     <script>
       $(function() {
         $('#testForm').submit(function(e) {
@@ -80,6 +76,11 @@
             data: $('#testForm').serialize(),
             success: function(data) {
               $('#jsonResult').text(JSON.stringify(data));
+              console.log("success");
+            },
+            error: function(err){
+              $('#jsonResult').text(JSON.stringify(err));
+              console.log("error");
             }
           });
           e.preventDefault();

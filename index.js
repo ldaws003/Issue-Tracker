@@ -1,5 +1,5 @@
 'use strict';
-
+process.loadEnvFile();
 const express = require('express');
 const bodyParser = require('body-parser');
 const expect = require('chai').expect;
@@ -24,8 +24,12 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use(helmet({
   frameguard: { action: 'deny' },
-  hidePoweredBy: { setTo: 'PHP 3.2.0' },
-  dnsPrefetchControl: false
+  dnsPrefetchControl: false,
+  contentSecurityPolicy: {
+    directives: {
+      defaultSrc: ["'self'"]
+    }    
+  }
 }));
 
 //Sample front-end
@@ -42,7 +46,7 @@ app.route('/')
 
 
 //For FCC testing purposes
-fccTestingRoutes(app);
+//fccTestingRoutes(app);
 
 //Routing for API 
 apiRoutes(app);
