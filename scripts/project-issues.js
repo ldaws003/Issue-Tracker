@@ -51,7 +51,7 @@ $(function() {
         type: "PUT",
         url: url,
         data: {_id: $(this).attr('id'), open: false},
-        success: function(data) { alert(data); window.location.reload(true); }
+        success: function(data) { alert("Issue Closed"); window.location.reload(true); }
         });
         e.preventDefault();
     });
@@ -61,7 +61,7 @@ $(function() {
         type: "DELETE",
         url: url,
         data: {_id: $(this).attr('id')},
-        success: function(data) { alert(data); window.location.reload(true); }
+        success: function(data) { alert("Issue deleted"); window.location.reload(true); }
         });
         e.preventDefault();
     });

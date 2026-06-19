@@ -29,7 +29,7 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "https://code.jquery.com"]
+      scriptSrc: ["'self'", "https://code.jquery.com", "https://cdn.jsdelivr.net"]
     }    
   }
 }));
@@ -48,7 +48,7 @@ app.route('/')
 
 
 //For FCC testing purposes
-//fccTestingRoutes(app);
+fccTestingRoutes(app);
 
 //Routing for API 
 apiRoutes(app);
